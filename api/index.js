@@ -1,7 +1,6 @@
-'use strict'
 var mongoose = require('mongoose');
 var app = require('./app');
-const port = process.env.PORT || 3800;
+const port = 4002;
 
 
 mongoose.Promise = global.Promise;

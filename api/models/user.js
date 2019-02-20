@@ -1,16 +1,37 @@
 'use strict'
 const mongosee = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 var Schema = mongosee.Schema;
 
 var UserSchema = Schema({
-    name: String,
-    surname: String,
-    nick: String,
-    email: String,
-    password: String,
-    role: String,
-    image: String
+    name: {
+        type: String
+    },
+    surname: {
+        type: String
+    },
+    nick: {
+        type: String,
+        unique: true,
+        require: [true, 'Nick is necesary']
+    },
+    email: {
+        type: String,
+        unique: true,
+        require: [true, 'Email is necesary']
+    },
+    password: {
+        type: String,
+        unique: true,
+        require: [true, 'Password is necesary']
+    },
+    role: {
+        type: String
+    },
+    image: {
+        type: String
+    }
 });
 
 module.exports = mongosee.model('User', UserSchema);
