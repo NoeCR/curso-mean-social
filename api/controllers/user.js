@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const User = require('../models/user');
 const Follow = require('../models/follow');
+const Publication = require('../models/publication');
 const jwt = require('../services/jwt');
 const mongoosePaginate = require('mongoose-pagination');
 const fs = require('fs');
@@ -141,7 +142,6 @@ var UserController = {
             var file_split = file_path.split('\\');
             var file_name = file_split.pop();
             var file_ext = file_name.split('\.').pop();
-            console.log(file_name);
             var ext = ['png', 'jpg', 'jpeg'];
 
             if (ext.includes(file_ext.toLowerCase())) {
@@ -229,8 +229,9 @@ const getCountFollow = async(user_id) => {
         // Ambas formas. "following" con callback de countDocuments y "followed" con una promesa
         let following = await Follow.countDocuments({ "user": user_id }, (err, result) => { return result });
         let followed = await Follow.countDocuments({ "followed": user_id }).then(count => count);
+        let publications = await Publication.countDocuments({ "user": user_id }).then(count => count);
 
-        return { following, followed }
+        return { following, followed, publications }
 
     } catch (e) {
         console.log(e);

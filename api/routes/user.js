@@ -1,7 +1,7 @@
 var { UserController, getCounters } = require('../controllers/user');
 var express = require('express');
 var md_auth = require('../middlewares/authenticated');
-var app = express(); //.Router();
+var app = express();
 const multipart = require('connect-multiparty');
 var md_upload = multipart({ uploadDir: './uploads/users' });
 
