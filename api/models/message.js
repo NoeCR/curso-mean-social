@@ -6,7 +6,7 @@ var MessageSchema = Schema({
     text: String,
     viewed: Boolean,
     created_at: String,
-    emmiter: { type: Schema.ObjectId, ref: 'User' },
+    emitter: { type: Schema.ObjectId, ref: 'User' },
     receiver: { type: Schema.ObjectId, ref: 'User' }
 });
 
