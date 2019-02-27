@@ -1,7 +1,7 @@
 'use strict'
 const mongosee = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-
+mongosee.set('useFindAndModify', false);
 var Schema = mongosee.Schema;
 
 var UserSchema = Schema({
