@@ -1,19 +1,19 @@
 var { UserController, getCounters } = require('../controllers/user');
 var express = require('express');
 var md_auth = require('../middlewares/authenticated');
-var api = express(); //.Router();
+var app = express(); //.Router();
 const multipart = require('connect-multiparty');
 var md_upload = multipart({ uploadDir: './uploads/users' });
 
 
-api.get('/home', UserController.home);
-api.post('/register', UserController.saveUser);
-api.post('/login', UserController.loginUser);
-api.get('/user/:id', md_auth.ensureAuth, UserController.getUser);
-api.get('/users/:page?', md_auth.ensureAuth, UserController.getUsers);
-api.put('/update-user', md_auth.ensureAuth, UserController.updateUser);
-api.post('/upload-image-user', [md_auth.ensureAuth, md_upload], UserController.uploadImage);
-api.get('/get-image-user/:imageFile', UserController.getImageFile);
-api.get('/counters/:id?', md_auth.ensureAuth, getCounters);
+app.get('/home', UserController.home);
+app.post('/register', UserController.saveUser);
+app.post('/login', UserController.loginUser);
+app.get('/user/:id', md_auth.ensureAuth, UserController.getUser);
+app.get('/users/:page?', md_auth.ensureAuth, UserController.getUsers);
+app.put('/update-user', md_auth.ensureAuth, UserController.updateUser);
+app.post('/upload-image-user', [md_auth.ensureAuth, md_upload], UserController.uploadImage);
+app.get('/get-image-user/:imageFile', UserController.getImageFile);
+app.get('/counters/:id?', md_auth.ensureAuth, getCounters);
 
-module.exports = api;
+module.exports = app;

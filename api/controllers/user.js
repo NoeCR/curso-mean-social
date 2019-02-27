@@ -12,11 +12,6 @@ var UserController = {
             message: 'Página inicial en el controlador de usuario'
         });
     },
-    pruebas: (req, res) => {
-        res.status(200).send({
-            message: 'Página de pruebas del controllador de usuario'
-        });
-    },
     saveUser: (req, res) => {
         var params = req.body;
         var user = new User();
@@ -231,7 +226,7 @@ const getCounters = (req, res) => {
 
 const getCountFollow = async(user_id) => {
     try {
-        // Lo hice de dos formas. "following" con callback de countDocuments y "followed" con una promesa
+        // Ambas formas. "following" con callback de countDocuments y "followed" con una promesa
         let following = await Follow.countDocuments({ "user": user_id }, (err, result) => { return result });
         let followed = await Follow.countDocuments({ "followed": user_id }).then(count => count);
 

@@ -1,21 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+var expressSanitizer = require('express-sanitizer');
 var app = express();
 
-// cargar rutas
-var user_routes = require('./routes/user');
-var follow_routes = require('./routes/follow');
-var publication_routes = require('./routes/publication');
 
 // cargar middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressSanitizer());
 // cors
 
 // rutas
-app.use('/api', user_routes);
-app.use('/api', follow_routes);
-app.use('/api', publication_routes);
+app.use('/api', require('./routes/index'));
+
 
 module.exports = app;
