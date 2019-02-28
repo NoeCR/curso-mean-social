@@ -3,11 +3,6 @@ var bodyParser = require('body-parser');
 var expressSanitizer = require('express-sanitizer');
 var app = express();
 
-
-// cargar middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(expressSanitizer());
 // cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -17,6 +12,12 @@ app.use((req, res, next) => {
 
     next();
 });
+
+// cargar middlewares
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(expressSanitizer());
+
 // rutas
 app.use('/api', require('./routes/index'));
 
