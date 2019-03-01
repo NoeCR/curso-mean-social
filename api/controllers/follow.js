@@ -10,10 +10,12 @@ var FollowController = {
 
         follow.user = req.user.sub;
         follow.followed = params.followed;
-
+        console.log(follow.user);
+        console.log(follow.followed);
         follow.save((err, followStored) => {
             if (err) return res.status(500).json({ message: 'Error al guardar el seguimiento' });
             if (!followStored) return res.status(400).json({ message: 'Error: no se ha guardado el seguimiento' });
+            console.log(followStored);
             return res.status(200).json({ follow: followStored });
         });
     },
@@ -70,7 +72,6 @@ var FollowController = {
         } else if (!isNaN(req.params.id)) {
             page = req.params.id;
         }
-        console.log(user);
         Follow.find({ followed: user })
             .populate('user followed')
             .paginate(page, itemsPerPage, (err, followers, total) => {

@@ -33,5 +33,5 @@ var UserSchema = Schema({
         type: String
     }
 });
-
+UserSchema.plugin(uniqueValidator);
 module.exports = mongosee.model('User', UserSchema);

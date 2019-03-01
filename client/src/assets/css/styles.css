@@ -8,6 +8,22 @@
     padding-bottom: 1%;
 }
 
+.active {
+    border-bottom: 3px solid yellowgreen;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2d8ec5), to(#1d9ce5));
+    background-image: linear-gradient(#2d8ec5, #34a2e1 60%, #257fb3);
+    background-repeat: no-repeat;
+    border-radius: 6%;
+    background-position: 0 100%;
+    background-size: 100% 2px;
+    /* background-color: #2d8ec5 !important;*/
+    transition: background-size .2s;
+}
+
+.active:hover {
+    background-size: 100% 50px;
+}
+
 
 /* Header */
 
@@ -25,7 +41,112 @@
 
 .navigation .navbar * {
     color: white !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2d8ec5), to(#1d9ce5));
+    background-image: linear-gradient(#2d8ec5, #34a2e1 60%, #257fb3);
+    background-repeat: no-repeat;
+    border-radius: 6%;
+    background-position: 0 100%;
+    background-size: 100% 2px;
+    transition: background-size .2s;
+}
+
+.navigation .navbar a:hover {
+    background-size: 100% 50px;
 }
 
 
-/* Re*/
+/* Jumbotron */
+
+.jumbotron {
+    padding: 25px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+/* Menu */
+
+.navigation .navbar .dropdown-menu {
+    border-radius: 0px !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2FA4E7), to(#1d9ce5));
+    background-image: linear-gradient(#54b4eb, #2FA4E7 60%, #1d9ce5);
+    background-repeat: no-repeat;
+    background-color: #2FA4E7 !important;
+    background-size: 1px 100% !important;
+    transition: background-size .4s;
+}
+
+.navigation .navbar .dropdown-menu * {
+    border-radius: 0px !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2FA4E7), to(#1d9ce5));
+    background-image: linear-gradient(#54b4eb, #2FA4E7 60%, #1d9ce5);
+    background-repeat: no-repeat;
+    background-color: #2FA4E7 !important;
+    background-size: 1px 100% !important;
+    transition: background-size .4s;
+}
+
+.navigation .navbar .dropdown-menu a:hover {
+    background-size: 250px 100% !important;
+}
+
+.dropdown-toggle {
+    border-radius: 0px !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2FA4E7), to(#1d9ce5));
+    background-image: linear-gradient(#54b4eb, #2FA4E7 60%, #1d9ce5);
+    background-repeat: no-repeat;
+    background-color: #2FA4E7 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+
+/*  AVATAR  MENU TOP */
+
+.navigation .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-right: 12px;
+}
+
+.navigation .avatar img {
+    width: 35px;
+    height: auto;
+}
+
+
+/*  AVATAR  PAGINA USERS*/
+
+.item-user .image-user {
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-right: 12px;
+}
+
+.item-user .image-user img {
+    width: 75px;
+    height: auto;
+}
+
+.item-user .user-name {
+    margin-top: 3%;
+}
+
+.item-user .user-name a {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.item-user .user-name .nick-name {
+    font-weight: normal;
+    color: grey;
+}

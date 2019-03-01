@@ -108,7 +108,7 @@ var UserController = {
             if (err) return res.status(500).json({ message: 'Error al buscar en la BBDD' });
             if (!usersDB) return res.status(404).json({ message: 'No se han encontrado usuarios en la BBDD' });
 
-            followThisUsers(client_id).then((value) => {
+            followUserIds(client_id).then((value) => {
                 return res.status(200).json({
                     usersDB,
                     users_following: value.following,
@@ -150,13 +150,10 @@ var UserController = {
                     if (err) return res.status(500).json({ message: 'Error al buscar en la BBDD' });
                     if (!userUpdate) return res.status(400).json({ message: 'No se encontro el usuario' });
 
-                    return res.status(200).json({ userUpdate });
+                    return res.status(200).send({ user: userUpdate });
                 })
             } else {
-                fs.unlink(file_path, (err) => {
-                    if (err) throw err;
-                    console.log('Extensión no valida');
-                });
+                removeFile(file_path, 'Extensión no valida');
             }
         }
     },
@@ -171,6 +168,13 @@ var UserController = {
             }
         });
     }
+}
+
+function removeFile(file_path, message) {
+    fs.unlink(file_path, (err) => {
+        if (err) throw err;
+        return res.status(200).send({ message });
+    });
 }
 async function followThisUsers(identity_user_id, user_id) {
     var following = await Follow.findOne({ "user": identity_user_id, "followed": user_id }).exec().then((follow) => {
@@ -190,28 +194,35 @@ async function followThisUsers(identity_user_id, user_id) {
         followed
     }
 }
+
 async function followUserIds(user_id) {
-    var following = await Follow.find({ 'user': user_id }).select({ '_id': 0, '_v': 0, 'user': 0 }).exec((err, follows) => {
-        return follows;
-    });
+    console.log(user_id);
+    var following = await Follow.find({ user: user_id }).select({ _id: 0, _v: 0, user: 0 }).exec()
+        .then((follows) => {
+            var follows_clean = [];
+            follows.forEach((follow) => {
+                follows_clean.push(follow.followed);
+            });
+            return follows_clean;
+        }).catch((err) => {
+            return handleError(err);
+        });
+    var followed = await Follow.find({ followed: user_id }).select({ _id: 0, __v: 0, followed: 0 }).exec()
+        .then((follows) => {
+            var follows_clean = [];
 
-    var followed = await Follow.find({ 'followed': user_id }).select({ '_id': 0, '_v': 0, 'followed': 0 }).exec((err, follows) => {
-        return follows;
-    });
+            follows.forEach((follow) => {
+                follows_clean.push(follow.user);
+            });
+            return follows_clean;
+        }).catch((err) => {
+            return handleError(err);
+        });
 
-    var following_clean = [];
-    following.forEach((follow) => {
-        following_clean.push(follow.followed);
-    });
-
-    var followed_clean = [];
-    followed.forEach((follow) => {
-        followed_clean.push(follow.followed);
-    });
     return {
-        following: following_clean,
-        followed: followed_clean
-    }
+        following: following,
+        followed: followed
+    };
 }
 
 const getCounters = (req, res) => {

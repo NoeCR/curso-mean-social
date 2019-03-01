@@ -1,9 +1,9 @@
 <div class="col-lg-5 center-block">
     <h1 class="h1-strong">{{title}}</h1>
 
-    <!-- <div class="alert alert-success" *ngIf="status == 'success'">
-            <p>Registro completado correctamente, <a [routerLink]="[ '/' ]">Identificate aquí</a></p>
-        </div> -->
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        <p>Te has identificado correctamente, bienvenido!</p>
+    </div>
     <div class="alert alert-danger" *ngIf="status == 'error'">
         <p>Usuario o contraseña incorrectos</p>
     </div>
@@ -11,7 +11,7 @@
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" placeholder="" required />
+            <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" required />
             <span *ngIf="!email.valid && email.touched">
                         El correo no es valido
                     </span>
@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="user.password" placeholder="" required />
+            <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="user.password" required />
             <span *ngIf="!password.valid && password.touched">
                     La contraseña es obligatoria
                 </span>
