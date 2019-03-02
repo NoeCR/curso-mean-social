@@ -44,6 +44,7 @@ var PublicationController = {
             follows.forEach((follow) => {
                 follows_clean.push(follow.followed);
             });
+            follows_clean.push(req.user.sub);
             Publication.find({ user: { "$in": follows_clean } })
                 .sort('-created_at')
                 .populate('user')
@@ -55,6 +56,7 @@ var PublicationController = {
                         total,
                         publications,
                         page,
+                        itemsPerPage,
                         pages: Math.ceil(total / itemsPerPage)
                     });
                 });

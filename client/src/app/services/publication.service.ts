@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { GLOBAL } from './global';
 
 @Injectable()
-export class FollowService{
+export class PublicationService{
     public url:string;
     public identity;
     public token;
@@ -39,11 +39,15 @@ export class FollowService{
         }
         return this.identity;
     }
-    addFollow(follow): Observable<any>{
-        let params = JSON.stringify(follow);
-        return this._http.post(this.url + 'follow', params, {headers: this.headers});
+    addPublication(publication): Observable<any>{
+        let params = JSON.stringify(publication);
+
+        return this._http.post(this.url + 'publication', params, {headers: this.headers});
     }
-    removeFollow(id): Observable<any>{
-        return this._http.delete(this.url + 'unfollow/' + id, {headers: this.headers});
+    getPublications(page = 1): Observable<any>{
+        return this._http.get(this.url + 'publications/' + page, {headers: this.headers});
+    }
+    removePublication(id): Observable<any>{
+        return this._http.delete(this.url + 'publication/' + id, {headers: this.headers});
     }
 }

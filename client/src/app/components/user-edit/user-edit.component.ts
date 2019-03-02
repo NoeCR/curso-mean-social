@@ -47,16 +47,6 @@ export class UserEditComponent implements OnInit {
                     this.status = 'success';
                     localStorage.setItem('identity', JSON.stringify(this.user));
                     this.identity = this.user;
-                    // Subida de imágen de usuario
-                    // this._uploadService.makeFileRequest(this.url + 'upload-image-user', [], this.filesToUpload, this.token, 'image')
-                    //        .then((result) => {
-                    //            console.log('Resultado' , result);
-                    //            //this.user.image = result.user.image;
-                    //            //localStorage.setItem('identity', JSON.stringify(this.user));
-                    //        })
-                    //        .catch((err) => {
-                    //            console.log('No entra en el then');
-                    //        });
                     this._uploadService.makeFilesRequest(this.url + 'upload-image-user', [], this.filesToUpload, this.token, 'image')
                     .subscribe(
                         response => {

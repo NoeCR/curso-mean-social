@@ -122,7 +122,8 @@
 
 /*  AVATAR  PAGINA USERS*/
 
-.item-user .image-user {
+.item-user .image-user,
+.item-publication .image-user {
     width: 75px;
     height: 75px;
     border-radius: 100px;
@@ -131,7 +132,8 @@
     margin-right: 12px;
 }
 
-.item-user .image-user img {
+.item-user .image-user img,
+.item-publication .image-user img {
     width: 75px;
     height: auto;
 }
@@ -148,5 +150,104 @@
 
 .item-user .user-name .nick-name {
     font-weight: normal;
+    color: grey;
+}
+
+.item-user .button-follow {
+    margin-top: 2.5%;
+    padding-right: 3%;
+}
+
+
+/* SIDEBAR */
+
+#user-card {
+    padding: 2%;
+    width: 32%;
+    margin-top: 68px;
+    margin-right: 1%;
+}
+
+#user-card .avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-right: 12px;
+}
+
+#user-card .avatar img {
+    width: 75px;
+    height: auto;
+}
+
+#user-card .name-surname {
+    font-weight: 300;
+    font-size: 17px;
+    margin-top: 5%;
+    margin-left: 4%;
+}
+
+#user-card .name-surname a {
+    color: #666;
+    text-decoration: none;
+}
+
+#user-card .name-surname .nick-name {
+    color: #969393;
+}
+
+#user-card .following-data {
+    float: left;
+    padding-right: 7%;
+    margin-top: 5%;
+    padding-left: 6%;
+    border-right: 2px solid #ccc;
+}
+
+#user-card .stats a {
+    text-decoration: none;
+}
+
+#user-card .following-data:last-child {
+    border: none;
+}
+
+#user-card .label-stats,
+#user-card .number-stats {
+    display: block;
+    text-align: center;
+}
+
+#user-card .label-stats {
+    font-weight: bold;
+    color: #555;
+}
+
+#user-card .number-stats {
+    font-weight: bold;
+    color: #337ab7;
+}
+
+#new-publication {
+    padding: 2%;
+    width: 32%;
+    margin-right: 1%;
+}
+
+
+/* Timeline */
+
+#publications {
+    min-width: 100%;
+    min-height: 500px;
+}
+
+.data-publication {
+    margin-top: 1%;
+}
+
+#publications .date {
     color: grey;
 }

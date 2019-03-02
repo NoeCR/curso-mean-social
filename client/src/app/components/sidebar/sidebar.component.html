@@ -1,0 +1,73 @@
+<div id="user-card" class="col-lg-4 panel panel-default pull-right">
+    <div class="avatar pull-left">
+        <img src="{{url + 'get-image-user/' + identity.image}}" *ngIf="identity.image" />
+        <img src="{{url + 'get-image-user/default.jpg'}}" *ngIf="!identity.image" />
+    </div>
+
+    <div class="name-surname pull-left">
+        <a href="#" class="user-name">
+            {{identity.name + ' ' + identity.surname}}
+        </a>
+        <p>{{identity.nick }}</p>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="stats" *ngIf="stats">
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats">
+                    Siguiendo
+                </span>
+                <span class="number-stats">
+                    {{stats.following}}
+                </span>
+            </a>
+        </div>
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats">
+                    Seguidores
+                </span>
+                <span class="number-stats">
+                    {{stats.followed}}
+                </span>
+            </a>
+        </div>
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats">
+                    Publications
+                </span>
+                <span class="number-stats">
+                    {{stats.publications}}
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="new-publication" class="col-lg-4 panel panel-default pull-right">
+    <div class="alert alert-success" *ngIf="status == 'success'">
+        Publicación creada correctamente
+    </div>
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        No se ha creado la publicación
+    </div>
+    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); sendPublication($event);" class="col-lg-10">
+
+        <div class="form-group">
+            <label for="name">Comentario</label>
+            <textarea class="form-control" name="text" #text="ngModel" [(ngModel)]="publication.text" required></textarea>
+            <span *ngIf="!text.valid && text.touched">
+                El texto es obligatorio
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="file">Archivo</label>
+            <input type="file" accept="image/gif, image/jpeg, image/png" />
+        </div>
+
+        <input type="submit" class="btn btn-success" value="{{title}}" [disabled]="!newPubForm.form.valid" />
+    </form>
+</div>

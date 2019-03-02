@@ -1,0 +1,30 @@
+<div id="publications">
+    <div *ngFor="let pub of publications" class="item-publication">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="image-user pull-left">
+                    <a href="#">
+                        <img src="{{url + 'get-image-user/' + pub.user.image}}" *ngIf="pub.user.image" />
+                        <img src="{{url + 'get-image-user/default.jpg'}}" *ngIf="!pub.user.image" />
+                    </a>
+                </div>
+                <div class="data-publication">
+                    <span>
+                            {{pub.user.name + ' ' + pub.user.surname}}
+                        </span> &nbsp; | &nbsp;
+                    <span class="date">
+                            {{(pub.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}
+                        </span>
+                </div>
+                <div class="pub-text pull-left">
+                    {{pub.text}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-center">
+    <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+            Ver más publicaciones 
+        </button>
+</div>

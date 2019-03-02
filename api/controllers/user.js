@@ -145,7 +145,6 @@ var UserController = {
             var ext = ['png', 'jpg', 'jpeg'];
 
             if (ext.includes(file_ext.toLowerCase())) {
-                console.log('Extensión del archivo permitida', file_ext);
                 User.findByIdAndUpdate(userId, { image: file_name }, { new: true }, (err, userUpdate) => {
                     if (err) return res.status(500).json({ message: 'Error al buscar en la BBDD' });
                     if (!userUpdate) return res.status(400).json({ message: 'No se encontro el usuario' });
@@ -196,7 +195,6 @@ async function followThisUsers(identity_user_id, user_id) {
 }
 
 async function followUserIds(user_id) {
-    console.log(user_id);
     var following = await Follow.find({ user: user_id }).select({ _id: 0, _v: 0, user: 0 }).exec()
         .then((follows) => {
             var follows_clean = [];

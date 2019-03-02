@@ -6,7 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
-
+import { TimelineComponent } from './components/timeline/timeline.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,7 +15,8 @@ const routes: Routes = [
   {path: 'registro', component: RegisterComponent},
   {path: 'mis-datos', component: UserEditComponent},
   {path: 'users', component: UsersComponent},
-  {path: 'users/:page', component: UsersComponent}
+  {path: 'users/:page', component: UsersComponent},
+  {path: 'timeline', component: TimelineComponent}
 ];
 
 @NgModule({
