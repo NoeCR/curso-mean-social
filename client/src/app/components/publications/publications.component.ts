@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Publication } from '../../models/publication';
 import { UserService } from '../../services/user.service';
@@ -31,19 +31,20 @@ export class PublicationsComponent implements OnInit {
         private _userService: UserService,
         private _publicationService: PublicationService
     ){
-            this.title = 'Timeline';
+            this.title = 'Publicaciones';
             this.identity = this._userService.getIdentity();
             this.token = this._userService.getToken();
             this.url = GLOBAL.url;
             this.page = 1;
     }
 
+    @Input() user: string;
     ngOnInit(){
         console.log('Componente Timeline cargado');
-        this.getPublications(this.page);
+        this.getPublications(this.user, this.page);
     }
-    getPublications(page, adding = false){
-        this._publicationService.getPublications(page).subscribe(
+    getPublications(user, page, adding = false){
+        this._publicationService.getPublicationsUser(user, page).subscribe(
             response => {
                 if(response.publications){
                     this.total = response.total;
@@ -76,11 +77,10 @@ export class PublicationsComponent implements OnInit {
     }
     public noMore = false;
     viewMore(){
+        this.page += 1;
         if(this.page == this.pages){
             this.noMore = true;
-        }else{
-            this.page += 1;
         }
-        this.getPublications(this.page, true);
+        this.getPublications(this.user, this.page, true);
     }
 }

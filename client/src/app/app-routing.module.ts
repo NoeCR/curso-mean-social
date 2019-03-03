@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'mis-datos', component: UserEditComponent},
   {path: 'users', component: UsersComponent},
   {path: 'users/:page', component: UsersComponent},
-  {path: 'timeline', component: TimelineComponent}
+  {path: 'timeline', component: TimelineComponent},
+  {path: 'perfil/:id', component: ProfileComponent}
 ];
 
 @NgModule({

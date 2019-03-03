@@ -15,7 +15,7 @@ import * as $ from 'jquery';
 export class TimelineComponent implements OnInit {
 
     public title:string;
-    public status: string;
+    public status;
     public identity;
     public token;
     public url: string;
@@ -24,6 +24,7 @@ export class TimelineComponent implements OnInit {
     public pages: number;
     public publications: Publication[];
     public itemsPerPage: number;
+    public showImage;
 
     constructor(
         private _route: ActivatedRoute,
@@ -83,7 +84,35 @@ export class TimelineComponent implements OnInit {
         }
         this.getPublications(this.page, true);
     }
-    refresh(event){
+    refresh(event = null){
+        this.noMore = false;
         this.getPublications(1);
+    }
+    showThisImage(id){
+        if(this.showImage == id){
+            this.showImage = 1
+        }else{
+            this.showImage = id;
+        }        
+    }
+    removePublication(id){
+        //confirm("¿Seguro quieres eliminar esta publicación?");        
+        this._publicationService.removePublication(id).subscribe(
+            response => {
+                this.status = {
+                    hpd: 'success',
+                    msg: 'Publicación eliminada correctamente'
+                }
+                this.refresh();
+            },
+            error => {
+                console.log(<any>error);
+                this.status = {
+                    hpd: 'error',
+                    msg: 'No se ha podido eliminar la publicación'
+                }
+                this.refresh();
+            }
+        );
     }
 }

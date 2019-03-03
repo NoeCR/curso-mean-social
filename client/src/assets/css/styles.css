@@ -204,6 +204,7 @@
     margin-top: 5%;
     padding-left: 6%;
     border-right: 2px solid #ccc;
+    width: 33%;
 }
 
 #user-card .stats a {
@@ -244,10 +245,125 @@
     min-height: 500px;
 }
 
-.data-publication {
+#publications .data-publication {
     margin-top: 1%;
+    text-align: left;
+    margin-bottom: 1%;
 }
 
 #publications .date {
     color: grey;
+}
+
+#data-profile .label-follow {
+    position: fixed;
+    top: 552px;
+    left: 437px;
+}
+
+
+/* PROFILE */
+
+#data-profile {
+    min-height: 500px;
+    text-align: center;
+    padding-top: 2%;
+}
+
+#data-profile .avatar {
+    width: 185px;
+    height: 185px;
+    border-radius: 400px;
+    overflow: hidden;
+    margin: 0px auto;
+}
+
+#data-profile .avatar img {
+    width: 185px;
+    height: auto;
+}
+
+#data-profile .profile-name {
+    font-size: 19px;
+    font-weight: bold;
+    color: rgb(37, 37, 37);
+}
+
+#data-profile .stats {
+    margin: 0px auto;
+    width: 49%;
+    padding-left: 2%;
+}
+
+#data-profile .following-data {
+    float: left;
+    padding-right: 7%;
+    margin-top: 5%;
+    padding-left: 6%;
+    border-right: 2px solid #ccc;
+}
+
+#data-profile .stats a {
+    text-decoration: none;
+}
+
+#data-profile .following-data:last-child {
+    border: none;
+}
+
+#data-profile .label-stats,
+#data-profile .number-stats {
+    display: block;
+    text-align: center;
+}
+
+#data-profile .label-stats {
+    font-weight: bold;
+    color: #555;
+}
+
+#data-profile .number-stats {
+    font-weight: bold;
+    color: #337ab7;
+}
+
+#data-profile .follow {
+    width: 50%;
+    padding: 10%;
+    margin: 0px auto;
+}
+
+.pub-profile {
+    width: 100%;
+}
+
+.img-pub-mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1040;
+    background-color: whitesmoke;
+    opacity: 0.9;
+}
+
+.img-pub-content {
+    width: 500px;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+}
+
+.button-img {
+    opacity: 0.5 !important;
+    float: left !important;
+}
+
+.btn-pub {
+    margin-left: 1%;
+}
+
+.img-pub {
+    width: 500px;
 }

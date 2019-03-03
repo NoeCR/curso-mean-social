@@ -1,0 +1,67 @@
+<div class="col-lg-8 center-block">
+    <h1 class="h1-strong">{{title}}</h1>
+    <div id="data-profile" *ngIf="user">
+        <div class="label label-default label-follow" *ngIf="followed == true">
+            Te sigue
+        </div>
+        <div class="avatar">
+            <img src="{{url + 'get-image-user/' + user.image}}" *ngIf="user.image" />
+            <img src="{{url + 'get-image-user/default.jpg'}}" *ngIf="!user.image" />
+        </div>
+        <div class="profile-name">
+            <p>{{user.name + ' ' + user.surname}}</p>
+            <p>{{user.nick}}</p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="stats" *ngIf="stats">
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stats">
+                            Siguiendo
+                        </span>
+                    <span class="number-stats">
+                            {{stats.following}}
+                        </span>
+                </a>
+            </div>
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stats">
+                            Seguidores
+                        </span>
+                    <span class="number-stats">
+                            {{stats.followed}}
+                        </span>
+                </a>
+            </div>
+            <div class="following-data">
+                <a href="#">
+                    <span class="label-stats">
+                            Publications
+                        </span>
+                    <span class="number-stats">
+                            {{stats.publications}}
+                        </span>
+                </a>
+            </div>
+        </div>
+        <div class="follow">
+            <button class="btn btn-success" *ngIf="!following" (click)="followUser(user._id)">Seguir</button>
+            <button class="btn btn-default" *ngIf="following" (click)="unfollow(user._id)" [class.btn-danger]="user._id == followUserOver" (mouseenter)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)">
+                <span *ngIf="user._id == followUserOver; else following">
+                    Dejar de seguir
+                </span>
+                <ng-template #following>
+                    <span class="glyphicon glyphicon-ok-sign" ></span>
+                    Siguiendo
+                </ng-template>
+            </button>
+        </div>
+        <div class="pub-profile center-block" *ngIf="user">
+            <publications [user]="user._id"></publications>
+        </div>
+    </div>
+
+
+</div>
+<sidebar (sended)="refresh($event)"></sidebar>

@@ -47,7 +47,10 @@ export class PublicationService{
     getPublications(page = 1): Observable<any>{
         return this._http.get(this.url + 'publications/' + page, {headers: this.headers});
     }
-    removePublication(id): Observable<any>{
+    getPublicationsUser(id: any, page = 1): Observable<any>{
+        return this._http.get(this.url + 'publications-user/' + id +'/' + page, {headers: this.headers});
+    }
+    removePublication(id: any): Observable<any>{
         return this._http.delete(this.url + 'publication/' + id, {headers: this.headers});
     }
 }

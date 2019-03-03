@@ -1,6 +1,15 @@
 <div class="col-lg-8 center-block">
     <h1 class="h1-strong">{{title}}</h1>
-    <button class="btn btn-default btn-sm pull-right" (click)="refresh(event);">Mostrar nuevas</button>
+    <!-- PANEL STATUS-->
+    <div class="col-lg-12" *ngIf="status">
+        <div class="alert alert-success" *ngIf="status.hpd == 'success'">
+            <p>{{status.msg}}</p>
+        </div>
+        <div class="alert alert-danger" *ngIf="status.hpd == 'error'">
+            <p>{{status.msg}}</p>
+        </div>
+    </div>
+    <!--**************************************************************-->
     <div class="clearfix"></div>
     <div id="publications">
         <div *ngFor="let pub of publications" class="item-publication">
@@ -13,15 +22,61 @@
                         </a>
                     </div>
                     <div class="data-publication">
-                        <span>
-                                    {{pub.user.name + ' ' + pub.user.surname}}
-                                </span> &nbsp; | &nbsp;
-                        <span class="date">
-                                    {{(pub.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}
-                                </span>
+                        <a [routerLink]="[ '/perfil', pub.user._id ]">
+                            <span>
+                                {{pub.user.name + ' ' + pub.user.surname}}
+                            </span> &nbsp; | &nbsp;
+                            <span class="date">
+                                {{(pub.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}
+                            </span>
+                        </a>
                     </div>
                     <div class="pub-text pull-left">
                         {{pub.text}}
+                    </div>
+                    <div class="col-lg-12 btns-pub">
+                        <div class="pull-right btn-pub" *ngIf="pub.user._id == identity._id">
+                            <!-- <button class="btn btn-danger pull-right" (click)="removePublication(pub._id)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                            </button> -->
+                            <!-- Button HTML (to Trigger Modal) -->
+                            <a href="#myModal{{pub._id}}" role="button" class="btn btn-danger pull-right" data-toggle="modal">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                            <!-- Modal HTML -->
+                            <div id="myModal{{pub._id}}" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Confirmación</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
+                                            <p class="text-warning"><small>Si la eliminas no se podrá recuperar</small></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-primary" (click)="removePublication(pub._id)" data-dismiss="modal">Borrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pull-right btn-pub" *ngIf="pub.file">
+                            <button class="btn btn-warning pull-right" (click)="showThisImage(pub._id)" [class.btn-danger]="showImage == pub._id">
+                                <span class="glyphicon glyphicon-picture"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="img-pub-mask" *ngIf="pub.file && showImage == pub._id">
+                        <div class="img-pub-content">
+                            <button type="button" class="close button-img" aria-label="Close" (click)="showThisImage(pub._id)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <img src="{{url + 'get-image-pub/' + pub.file}}" *ngIf="pub.file" class="img-pub" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,8 +84,8 @@
     </div>
     <div class="col-lg-12 text-center">
         <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
-                    Ver más publicaciones 
-                </button>
+            Ver más publicaciones 
+        </button>
     </div>
 </div>
 <sidebar (sended)="refresh($event)"></sidebar>

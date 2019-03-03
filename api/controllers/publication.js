@@ -62,6 +62,34 @@ var PublicationController = {
                 });
         });
     },
+    getPublicationsUser: (req, res) => {
+        var page = 1;
+        var itemsPerPage = 4;
+        var userId = req.user.sub;
+        if (req.params.id) {
+            userId = req.params.id;
+        }
+        if (req.params.page) {
+            page = req.params.page;
+        }
+
+        Publication.find({ user: userId })
+            .sort('-created_at')
+            .populate('user')
+            .paginate(page, itemsPerPage, (err, publications, total) => {
+                if (err) { return res.status(500).json({ message: 'Error al obtener las publicaciones' }) }
+                if (!publications) { return res.status(404).json({ message: 'No hay publicaciones' }) }
+
+                return res.status(200).json({
+                    total,
+                    publications,
+                    page,
+                    itemsPerPage,
+                    pages: Math.ceil(total / itemsPerPage)
+                });
+            });
+
+    },
     getPublication: (req, res) => {
         var pubId = req.params.id;
         Publication.findById(pubId, (err, publication) => {
@@ -115,6 +143,17 @@ var PublicationController = {
                 return removeFile(res, file_path, 'Extensión no valida');
             }
         }
+    },
+    getImagePub: (req, res) => {
+        var image_file = req.params.imageFile;
+        var path_file = './uploads/publications/' + image_file;
+        fs.exists(path_file, (exist) => {
+            if (exist) {
+                res.sendFile(path.resolve(path_file));
+            } else {
+                res.status(200).json({ message: 'No existe la imágen' });
+            }
+        });
     }
 }
 

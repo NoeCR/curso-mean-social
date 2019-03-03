@@ -65,7 +65,7 @@
 
         <div class="form-group">
             <label for="file">Archivo</label>
-            <input type="file" accept="image/gif, image/jpeg, image/png" />
+            <input #fileInput type="file" accept="image/gif, image/jpeg, image/png" (change)="fileChangesEvent($event)" />
         </div>
 
         <input type="submit" class="btn btn-success" value="{{title}}" [disabled]="!newPubForm.form.valid" />
