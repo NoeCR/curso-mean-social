@@ -39,16 +39,22 @@ export class PublicationsComponent implements OnInit {
     }
 
     @Input() user: string;
+   
     ngOnInit(){
-        console.log('Componente Timeline cargado');
+        console.log('Componente Publication cargado');
         this.getPublications(this.user, this.page);
     }
-    getPublications(user, page, adding = false){
-        this._publicationService.getPublicationsUser(user, page).subscribe(
+    getPublications(user, page = 1, adding = false){
+        if(user == undefined){
+            this._route.params.subscribe(params => {
+                this.user = params['id'];  
+            });
+        }
+        this._publicationService.getPublicationsUser(this.user, page).subscribe(
             response => {
                 if(response.publications){
                     this.total = response.total;
-                    this.pages = response.pages;
+                    this.pages = (response.pages == 0) ? 1: response.pages;
                     this.itemsPerPage = response.itemsPerPage;
                     if(!adding){
                         this.publications = response.publications;
@@ -61,7 +67,7 @@ export class PublicationsComponent implements OnInit {
                     }
                     
                     if(page > this.pages){
-                        this._router.navigate(['/']);
+                        this._router.navigate(['/users']);
                     }
                     
                 }else{

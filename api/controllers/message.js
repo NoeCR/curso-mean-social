@@ -44,7 +44,7 @@ var MessageController = {
                 return res.status(200).json({
                     messages,
                     total,
-                    page: Math.ceil(total / itemsPerPage)
+                    pages: Math.ceil(total / itemsPerPage)
                 });
             });
     },
@@ -62,6 +62,7 @@ var MessageController = {
         var itemsPerPage = 4;
 
         Message.find({ emitter: userId })
+            .sort('-created_at')
             .populate('receiver', '_id name surname nick image')
             .paginate(page, itemsPerPage, (err, messages, total) => {
                 if (err) return res.status(500).json({ message: 'Error en la petición' });
@@ -70,7 +71,7 @@ var MessageController = {
                 return res.status(200).json({
                     messages,
                     total,
-                    page: Math.ceil(total / itemsPerPage)
+                    pages: Math.ceil(total / itemsPerPage)
                 });
             });
     },

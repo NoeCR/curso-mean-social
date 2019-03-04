@@ -1,5 +1,36 @@
 /* Generales */
 
+.image-front {
+    background-image: url("../images/01.png");
+    height: 600px;
+}
+
+.main-menu {
+    height: 50px;
+    overflow: hidden;
+}
+
+.h1-strong-main {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 1%;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1%;
+    font-family: 'Permanent Marker', cursive;
+    color: #FFFFFF;
+    background: transparent;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+    color: #FFFFFF;
+    background: transparent;
+}
+
+.home-p {
+    color: aliceblue !important;
+    font-family: 'Laila', serif;
+    background: transparent;
+    text-shadow: #e0e0e0 1px 1px 0;
+}
+
 .h1-strong {
     font-size: 25px;
     font-weight: bold;
@@ -9,7 +40,7 @@
 }
 
 .active {
-    border-bottom: 3px solid yellowgreen;
+    /*border-bottom: 3px solid yellowgreen;*/
     background-image: -webkit-gradient(linear, left top, left bottom, from(#54b4eb), color-stop(60%, #2d8ec5), to(#1d9ce5));
     background-image: linear-gradient(#2d8ec5, #34a2e1 60%, #257fb3);
     background-repeat: no-repeat;
@@ -256,8 +287,8 @@
 }
 
 #data-profile .label-follow {
-    position: fixed;
-    top: 552px;
+    position: absolute;
+    top: 482px;
     left: 437px;
 }
 
@@ -344,8 +375,7 @@
     top: 0px;
     left: 0px;
     z-index: 1040;
-    background-color: whitesmoke;
-    opacity: 0.9;
+    background-color: rgba(191, 174, 174, 0.5);
 }
 
 .img-pub-content {
@@ -366,4 +396,15 @@
 
 .img-pub {
     width: 500px;
+}
+
+.people {
+    min-height: 500px;
+}
+
+
+/* Mensajes privados */
+
+.active-present:hover {
+    background-color: gainsboro;
 }

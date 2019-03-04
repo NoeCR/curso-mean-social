@@ -9,12 +9,12 @@ import { FollowService } from '../../services/follow.service';
 
 
 @Component({
-    selector: 'users',
-    templateUrl: './users.component.html',
+    selector: 'following',
+    templateUrl: './following.component.html',
     providers: [UserService, FollowService] 
 })
 
-export class UsersComponent implements OnInit {
+export class FollowingComponent implements OnInit {
 
     public title: string;
     public identity;
@@ -27,7 +27,9 @@ export class UsersComponent implements OnInit {
     public pages: number;
     public users: User[];
     public url: string;
-    public follows;
+    public following;
+    public follows: Array<any>;
+    public userPageId;
 
     constructor(
         private _route: ActivatedRoute,
@@ -35,14 +37,13 @@ export class UsersComponent implements OnInit {
         private _userService: UserService,
         private _followService: FollowService
     ){
-            this.title = 'Gente';           
+            this.title = 'Siguiendo';           
             this.identity = this._userService.getIdentity();
             this.token = this._userService.getToken();
             this.page = 1;
             this.next_page = 2;
             this.prev_page= 1;
             this.url = GLOBAL.url;
-           
     }
 
     ngOnInit(){
@@ -53,31 +54,25 @@ export class UsersComponent implements OnInit {
     actualPage(){
         this._route.params.subscribe(params => {
             let page = +params['page'];
-            
+            let id = params['id'];
+            this.userPageId = id;
             if(page >= 1){
                 this.page = page;
                 this.next_page = page + 1;
                 this.prev_page= page -1;
             }
 
-            this.getUsers(this.page);
+            this.getFollows(id, this.page);
         });
     }
 
-    getUsers(page){
-        this._userService.getUsers(page).subscribe(
+    getFollows(userId, page){
+        this._followService.getFollowing(userId, page).subscribe(
             response => {
-                if(!response.usersDB){
-                    this.status = 'error';
-                }else{
-                    this.total = response.total;
-                    this.pages = response.pages;
-                    this.users = response.usersDB;
-                    this.follows = response.users_following;
-                    if(page > this.pages){
-                        this._router.navigate(['/users', 1]);
-                    }
-                }
+                console.log(response);
+                this.pages = response.pages;
+                this.follows = response.follows;
+                this.following = response.users_following;
             }, 
             error => {
                 console.log(<any>error);
@@ -90,7 +85,7 @@ export class UsersComponent implements OnInit {
         this.followUserOver = user_id;
     }
     mouseLeave(user_id){
-        this.followUserOver =0;
+        this.followUserOver = 0;
     }
     followUser(followed){
         var follow = new Follow('', this.identity._id, followed);
@@ -100,7 +95,7 @@ export class UsersComponent implements OnInit {
                     this.status = 'error';
                 }else{
                     this.status = 'success';
-                    this.follows.push(followed);
+                    this.following.push(followed);
                 }   
             },
             error => {
@@ -112,9 +107,9 @@ export class UsersComponent implements OnInit {
     unfollowUser(followed){
         this._followService.removeFollow(followed).subscribe(
             response => {
-                var search = this.follows.indexOf(followed);
+                var search = this.following.indexOf(followed);
                 if(search != -1){
-                    this.follows.splice(search,1);
+                    this.following.splice(search,1);
                 }
             }, 
             error => {

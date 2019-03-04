@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { GLOBAL } from './global';
 
 @Injectable()
-export class FollowService{
+export class MessageService{
     public url:string;
     public identity;
     public token;
@@ -39,28 +39,15 @@ export class FollowService{
         }
         return this.identity;
     }
-    addFollow(follow): Observable<any>{
-        let params = JSON.stringify(follow);
-        return this._http.post(this.url + 'follow', params, {headers: this.headers});
+    addMessage(message): Observable<any>{
+        let params = JSON.stringify(message);
+        return this._http.post(this.url + 'message', params, {headers: this.headers});
     }
-    removeFollow(id): Observable<any>{
-        return this._http.delete(this.url + 'unfollow/' + id, {headers: this.headers});
+    getMessages(page = 1): Observable<any>{
+        return this._http.get(this.url + 'messages/' + page, {headers: this.headers});
     }
-    getFollowing(id, page): Observable<any>{
-        var url = this.url + 'following/1';
-        if(id != null){
-            url = this.url + 'following/' + id + '/' + page;
-        }
-        return this._http.get(url, {headers: this.headers});
+    getEmitMessages(page = 1): Observable<any>{
+        return this._http.get(this.url + 'emit-messages/' + page, {headers: this.headers});
     }
-    getFollowers(id, page = 1): Observable<any>{
-        var url = this.url + 'followers/1';
-        if(id != null){
-            url = this.url + 'followers/' + id + '/' + page;
-        }
-        return this._http.get(url, {headers: this.headers});
-    }
-    getMyFollows(): Observable<any>{
-        return this._http.get(this.url + 'get-follows', {headers: this.headers});
-    }
+
 }

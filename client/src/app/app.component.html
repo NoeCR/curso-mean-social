@@ -1,6 +1,6 @@
 <div class="navigation col-lg-12">
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container-fluid main-menu">
             <div class="navbar-header">
                 <a [routerLink]="[ '/home']" class="navbar-brand">
                     {{ title }}
@@ -23,17 +23,22 @@
                         <span class="glyphicon glyphicon-user"></span> Gente
                     </a>
                 </li>
+                <li>
+                    <a [routerLink]="[ '/mensajes']" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-envelope"></span> Mensajes
+                    </a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" *ngIf="indentity">
                 <li class="avatar">
                     <!-- cargar imagen de usuario-->
                     <img src="{{url + 'get-image-user/' + indentity.image}}" *ngIf="indentity && indentity.image" />
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" (click)="showMeModal();">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         {{indentity.nick}} <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu ">
                         <li>
                             <a [routerLink]="[ '/perfil', indentity._id ]">
                                 <span class="glyphicon glyphicon-user"></span> Mi perfil

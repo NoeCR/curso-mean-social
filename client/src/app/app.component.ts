@@ -2,7 +2,7 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from './services/user.service';
 import { GLOBAL } from './services/global';
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -33,5 +33,16 @@ export class AppComponent implements OnInit, DoCheck{
     localStorage.clear();
     this.indentity = null;
     this._router.navigate(['/']);
+ }
+ showMeModal() {
+    $( ".dropdown" ).hover(
+      function() {
+        $('.main-menu').css('overflow', 'visible');
+        $('.dropdown').addClass('open');
+      }, function() {
+        $('.main-menu').css('overflow', 'hidden');
+        $('.dropdown').removeClass('open');
+      }
+    );
   }
 }

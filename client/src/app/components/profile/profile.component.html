@@ -15,7 +15,7 @@
         <div class="clearfix"></div>
         <div class="stats" *ngIf="stats">
             <div class="following-data">
-                <a href="#">
+                <a [routerLink]="[ '/siguiendo', user._id, 1 ]">
                     <span class="label-stats">
                             Siguiendo
                         </span>
@@ -25,7 +25,7 @@
                 </a>
             </div>
             <div class="following-data">
-                <a href="#">
+                <a [routerLink]="[ '/seguidores', user._id, 1 ]">
                     <span class="label-stats">
                             Seguidores
                         </span>
@@ -35,7 +35,7 @@
                 </a>
             </div>
             <div class="following-data">
-                <a href="#">
+                <a [routerLink]="[ '/publications', user._id, 1  ]">
                     <span class="label-stats">
                             Publications
                         </span>
@@ -45,7 +45,7 @@
                 </a>
             </div>
         </div>
-        <div class="follow">
+        <div class="follow" *ngIf="user._id != identity._id">
             <button class="btn btn-success" *ngIf="!following" (click)="followUser(user._id)">Seguir</button>
             <button class="btn btn-default" *ngIf="following" (click)="unfollow(user._id)" [class.btn-danger]="user._id == followUserOver" (mouseenter)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)">
                 <span *ngIf="user._id == followUserOver; else following">
@@ -57,6 +57,7 @@
                 </ng-template>
             </button>
         </div>
+        <div class="clearfix" style="margin-bottom: 30px;" *ngIf="user._id == identity._id"></div>
         <div class="pub-profile center-block" *ngIf="user">
             <publications [user]="user._id"></publications>
         </div>

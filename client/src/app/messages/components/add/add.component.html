@@ -1,0 +1,31 @@
+<div class="col-lg-10">
+    <h3>{{title}}</h3>
+    <div *ngIf="status" class="alert alert-{{status.cssClass}}">
+        <p>{{status.message}}</p>
+    </div>
+    <!--Formulario envio mensajes-->
+    <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+
+        <div class="form-group">
+            <label for="file">Para:</label>
+            <!-- Listado de seguidores -->
+            <select *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
+                <option selected="selected">Selecciona un usuario</option>
+                <option *ngFor="let follow of follows" value="{{follow.followed._id}}">
+                    {{follow.followed.name + ' ' + follow.followed.surname + ' (' + follow.followed.nick + ') ' }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="text">Mensaje</label>
+            <textarea class="form-control" name="text" #text="ngModel" [(ngModel)]="message.text" required></textarea>
+            <span *ngIf="!text.valid && text.touched">
+                El texto es obligatorio
+            </span>
+        </div>
+
+
+        <input type="submit" class="btn btn-success" value="{{title}}" [disabled]="!formAdd.form.valid" />
+    </form>
+</div>

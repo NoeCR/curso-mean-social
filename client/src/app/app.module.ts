@@ -17,6 +17,15 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PublicationsComponent } from './components/publications/publications.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowedComponent } from './components/followed/followed.component';
+
+// Modulo custom
+import { MessagesModule } from './messages/messages.module';
+
+// Servicios
+import { UserService } from './services/user.service';
+import { UserGuard } from './services/user.guard';
 
 @NgModule({
   declarations: [
@@ -29,16 +38,22 @@ import { PublicationsComponent } from './components/publications/publications.co
     SidebarComponent,
     TimelineComponent,
     ProfileComponent,
-    PublicationsComponent
+    PublicationsComponent,
+    FollowingComponent,
+    FollowedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    UserGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

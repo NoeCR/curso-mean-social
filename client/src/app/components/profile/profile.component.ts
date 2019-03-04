@@ -56,7 +56,6 @@ export class ProfileComponent implements OnInit {
         this._userService.getUser(id).subscribe(
             response => {
                 if(response.userDB){
-                    console.log(response.value);
                     this.user = response.userDB;
                     if(response.value.following){
                         this.following = true;
@@ -81,7 +80,6 @@ export class ProfileComponent implements OnInit {
     getCounters(id){
         this._userService.getCounters(id).subscribe(
             response => {
-                console.log(response);
                 this.stats = response;
             }, 
             error => {

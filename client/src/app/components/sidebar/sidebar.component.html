@@ -5,7 +5,7 @@
     </div>
 
     <div class="name-surname pull-left">
-        <a href="#" class="user-name">
+        <a [routerLink]="[ '/perfil', identity._id ]" class="user-name">
             {{identity.name + ' ' + identity.surname}}
         </a>
         <p>{{identity.nick }}</p>
@@ -14,7 +14,7 @@
     <div class="clearfix"></div>
     <div class="stats" *ngIf="stats">
         <div class="following-data">
-            <a href="#">
+            <a [routerLink]="[ '/siguiendo', identity._id, 1 ]">
                 <span class="label-stats">
                     Siguiendo
                 </span>
@@ -24,7 +24,7 @@
             </a>
         </div>
         <div class="following-data">
-            <a href="#">
+            <a [routerLink]="[ '/seguidores', identity._id, 1 ]">
                 <span class="label-stats">
                     Seguidores
                 </span>
@@ -34,7 +34,7 @@
             </a>
         </div>
         <div class="following-data">
-            <a href="#">
+            <a [routerLink]="[ '/publications', identity._id ]">
                 <span class="label-stats">
                     Publications
                 </span>

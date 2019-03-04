@@ -11,12 +11,22 @@ var FollowController = {
         follow.user = req.user.sub;
         follow.followed = params.followed;
 
-        follow.save((err, followStored) => {
-            if (err) return res.status(500).json({ message: 'Error al guardar el seguimiento' });
-            if (!followStored) return res.status(400).json({ message: 'Error: no se ha guardado el seguimiento' });
+        Follow.findOne({ user: follow.user, followed: follow.followed })
+            .then((err, userDB) => {
+                if (err) return res.status(200).json({ message: 'Ya estas siguiendo ha este usuario' });
+                if (!userDB) {
+                    follow.save((err, followStored) => {
+                        if (err) return res.status(200).json({ message: 'Error al guardar el seguimiento' });
+                        if (!followStored) return res.status(400).json({ message: 'Error: no se ha guardado el seguimiento' });
 
-            return res.status(200).json({ follow: followStored });
-        });
+                        return res.status(200).json({ follow: followStored });
+                    });
+                }
+            }).catch((err) => {
+                console.log('Error:', err);
+            });
+
+
     },
     unfollow: (req, res) => {
         var user = req.user.sub;
@@ -49,11 +59,15 @@ var FollowController = {
                 if (err) return res.status(500).json({ message: 'Error 500: No se ha podido conectar con la BBDD' });
                 if (!follows) return res.status(400).json({ message: 'Error 400: no se ha encontrado registros' });
 
-                return res.status(200).json({
-                    message: 'Listado de usuarios seguidos',
-                    pages: Math.ceil(total / itemsPerPage),
-                    follows,
-                    total
+                followUserIds(user).then((value) => {
+                    return res.status(200).json({
+                        message: 'Listado de usuarios seguidos',
+                        follows,
+                        users_following: value.following,
+                        users_follow_me: value.followed,
+                        total,
+                        pages: Math.ceil(total / itemsPerPage)
+                    });
                 });
             });
     },
@@ -77,11 +91,15 @@ var FollowController = {
                 if (err) return res.status(500).json({ message: 'Error 500: No se ha podido conectar con la BBDD' });
                 if (!followers) return res.status(400).json({ message: 'Error 400: no se ha encontrado registros' });
 
-                return res.status(200).json({
-                    message: 'Listado de usuarios que te siguen',
-                    pages: Math.ceil(total / itemsPerPage),
-                    followers,
-                    totals
+                followUserIds(user).then((value) => {
+                    return res.status(200).json({
+                        message: 'Listado de usuarios que te siguen',
+                        followers,
+                        users_following: value.following,
+                        users_follow_me: value.followed,
+                        total,
+                        pages: Math.ceil(total / itemsPerPage)
+                    });
                 });
             });
     },
@@ -99,7 +117,33 @@ var FollowController = {
                 return res.status(200).json({ usersDB });
             });
     }
+}
+async function followUserIds(user_id) {
+    var following = await Follow.find({ user: user_id }).select({ _id: 0, _v: 0, user: 0 }).exec()
+        .then((follows) => {
+            var follows_clean = [];
+            follows.forEach((follow) => {
+                follows_clean.push(follow.followed);
+            });
+            return follows_clean;
+        }).catch((err) => {
+            return handleError(err);
+        });
+    var followed = await Follow.find({ followed: user_id }).select({ _id: 0, __v: 0, followed: 0 }).exec()
+        .then((follows) => {
+            var follows_clean = [];
 
+            follows.forEach((follow) => {
+                follows_clean.push(follow.user);
+            });
+            return follows_clean;
+        }).catch((err) => {
+            return handleError(err);
+        });
 
+    return {
+        following: following,
+        followed: followed
+    };
 }
 module.exports = FollowController;

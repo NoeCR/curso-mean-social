@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, EventEmitter, DoCheck , Output, ViewChild, ElementRef  } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { Publication } from '../../models/publication';
@@ -14,7 +14,7 @@ import { UploadService } from '../../services/upload.service';
     providers: [UserService, PublicationService, UploadService] 
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit,  DoCheck{
 
     public title: string;
     public identity;
@@ -43,8 +43,12 @@ export class SidebarComponent implements OnInit {
     ngOnInit(){
         console.log('Componente sidebar cargado');   
     }
+    ngDoCheck(): void {
+        this.getCounters(); 
+        this.stats = this._userService.getStats();         
+    }
+        
     onSubmit(form){
-        //console.log(this.publication);
         this._publicationService.addPublication(this.publication).subscribe(
             response => {
                 if(response.publication){
@@ -93,4 +97,16 @@ export class SidebarComponent implements OnInit {
     }
     @ViewChild('fileInput')
     inputFile: ElementRef;
+
+    getCounters(){
+        this._userService.getCounters().subscribe(
+            response => {
+                localStorage.setItem('stats', JSON.stringify(response));                             
+            }, 
+            error => {
+                this.status = 'error';
+                console.log(<any>error);
+            }
+        );
+    }
 }
